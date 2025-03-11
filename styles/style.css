@@ -1,0 +1,198 @@
+/* Import a modern sans-serif font from Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+  margin: 0;
+  padding: 0;
+  background: #000; /* Black background */
+  color: #ffcc00;  /* Yellow text */
+  position: relative;
+}
+
+/* Starfield background */
+#starfield {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+}
+.star {
+  position: absolute;
+  background: #fcfcfb;
+  border-radius: 50%;
+  opacity: 0.8;
+  animation: twinkle 2s infinite ease-in-out alternate;
+}
+@keyframes twinkle {
+  from { opacity: 0.2; }
+  to { opacity: 1; }
+}
+
+/* Header styling with navigation */
+header {
+  background: rgba(0, 0, 0, 0.8);
+  text-align: center;
+  padding: 1.5rem 0;
+  position: relative;
+  z-index: 20;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.5);
+}
+header h1 {
+  margin: 0;
+  font-size: 2em;
+  color: #ffcc00;
+  letter-spacing: 1px;
+}
+#navToggle {
+  background: none;
+  border: none;
+  color: #ffcc00;
+  font-size: 1.8rem;
+  position: absolute;
+  top: 1.2rem;
+  right: 1.2rem;
+  cursor: pointer;
+  display: none; /* Shown on mobile */
+}
+nav {
+  display: flex;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+nav ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+}
+nav ul li {
+  margin: 0 1rem;
+}
+nav ul li a {
+  color: #ffcc00;
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.3s ease;
+}
+nav ul li a:hover,
+nav ul li a:focus {
+  color: #fff;
+}
+
+/* Responsive Navigation */
+@media (max-width: 600px) {
+  #navToggle {
+    display: block;
+  }
+  nav {
+    display: none;
+    flex-direction: column;
+    background: rgba(0, 0, 0, 0.8);
+    position: absolute;
+    top: 100%;
+    right: 0;
+    width: 200px;
+    border-radius: 0 0 0 10px;
+  }
+  nav ul {
+    flex-direction: column;
+  }
+  nav ul li {
+    margin: 0.8rem 0;
+    text-align: right;
+    padding: 0 1rem;
+  }
+  nav.active {
+    display: flex;
+  }
+}
+
+/* Main content */
+main {
+  padding: 2rem;
+  max-width: 960px;
+  margin: 120px auto 2rem; /* Leave room for fixed header */
+  position: relative;
+  z-index: 10;
+}
+section {
+  background: rgba(0,0,0,0.9);
+  margin-bottom: 2rem;
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.5);
+}
+section h2 {
+  margin-top: 0;
+  font-size: 1.5rem;
+  color: #f4d146;
+}
+section p {
+  line-height: 1.6;
+  color: #f7f6f2;
+}
+section a {
+  color: #ffcc00;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+section a:hover,
+section a:focus {
+  color: #fff;
+  text-decoration: underline;
+}
+
+/* Footer styling */
+footer {
+  background: rgba(0,0,0,0.8);
+  color: #ffcc00;
+  text-align: center;
+  padding: 1rem;
+  font-size: 0.9rem;
+  box-shadow: 0 -2px 5px rgba(0,0,0,0.5);
+  position: relative;
+  z-index: 20;
+}
+
+#toggleHoverClick {
+    display: inline-block;
+    border: 2px solid #ffcc00;
+    border-radius: 5px;
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background 0.3s ease, color 0.3s ease;
+    margin-bottom: 1rem;
+  }
+  
+  /* Enabled state: filled yellow with black text */
+  #toggleHoverClick.enabled {
+    background: #ffcc00;
+    color: #000;
+  }
+  
+  /* Disabled state: transparent background with yellow outline and yellow text */
+  #toggleHoverClick.disabled {
+    background: transparent;
+    color: #ffcc00;
+  }
+  
+  /* Hover state: invert the current appearance */
+  #toggleHoverClick.enabled:hover {
+    background: transparent;
+    color: #ffcc00;
+  }
+  #toggleHoverClick.disabled:hover {
+    background: #ffcc00;
+    color: #000;
+  }
+  

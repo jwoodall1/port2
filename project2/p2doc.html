@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Find The Ball Documentation</title>
+  <link rel="stylesheet" href="../styles/style.css">
+  <!-- Load p5.js if needed for other purposes -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.min.js"></script>
+  <style>
+    /* Increase nav font size and spacing */
+    nav#mainNav ul li a {
+      font-size: 1.5em;
+      padding: 0.5em 1em;
+      font-family: 'Poppins', sans-serif;
+      color: #ffcc00;
+    }
+    header nav {
+      padding: 1rem 0;
+    }
+    /* Styling for the README display */
+    .readme-content {
+      background: rgba(0, 0, 0, 0.9);
+      color: #ffcc00;
+      padding: 1rem;
+      border-radius: 8px;
+      max-width: 800px;
+      margin: 2rem auto;
+      white-space: pre-wrap;
+      font-family: 'Poppins', sans-serif;
+      line-height: 1.6;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.5);
+      font-size: 1.1em;
+    }
+    /* Override default pre styling to inherit styles */
+    pre {
+      margin: 0;
+      font-family: inherit;
+      font-size: inherit;
+      color: inherit;
+      background: transparent;
+      border: none;
+    }
+  </style>
+</head>
+<body>
+  <!-- Starfield Background -->
+  <div id="starfield"></div>
+  
+  <!-- Navigation Bar -->
+  <header>
+    <nav id="mainNav">
+      <ul>
+        <li><a href="../project1/index_text_gen.html" class="trackable">Text Generator</a></li>
+        <li><a href="../project2/index_p5_game.html" class="trackable">Find The Ball</a></li>
+        <li><a href="../project3/index_CoinDrop.html" class="trackable">Coin Drop</a></li>
+      </ul>
+    </nav>
+  </header>
+  
+  <!-- Main Content: README Information -->
+  <main>
+    <div class="readme-content">
+      <pre>
+Find The Ball - Dog Game
+The Find The Ball game is an interactive web-based game built with p5.js. In this game, you help a playful dog find its tennis ball in a room filled with interactive zones.
+
+Features
+Dynamic Start Screen:
+- The game begins with a welcome screen that introduces the game and displays the rules.
+- A start button lets you begin the gameplay.
+
+Interactive Room:
+- A room image serves as the backdrop for the game.
+- Multiple interactive zones (e.g., Left Sofa, TV, Right Sofa, Coffee Table, Lamp, Window) are defined.
+- Hovering over a zone highlights it, and clicking within these zones increases an "Oopsies" counter.
+
+Ball Interaction:
+- A tennis ball is randomly placed in the room.
+- Clicking on the ball results in a win if the Oopsies counter is below a threshold; otherwise, it results in a loss.
+
+Game States:
+- The game includes several states: "start" (welcome screen), "game" (active gameplay), and "over" (game over screen).
+- A restart option is provided on the game over screen.
+
+Responsive Design:
+- The canvas dynamically scales to fit the browser window.
+- Virtual coordinates are used to ensure consistent gameplay across various screen sizes.
+
+File Structure
+index.html:
+- The main HTML file containing markup, styles, and the p5.js sketch.
+sketch.js:
+- The JavaScript file that implements game logic, including image loading, state management, and user interactions.
+Assets:
+- room.jpg, dog.jpg, tennisball.png: Image assets used in the game.
+
+How It Works
+- The game utilizes p5.js to render a scalable canvas.
+- Interactive zones are defined in virtual coordinates and highlighted on mouse hover.
+- Game logic tracks user actions, updating the "Oopsies" score and managing win/lose conditions.
+- A dog image is persistently displayed in the bottom-left corner.
+- Clicking the ball, if done with minimal damage, results in a win; otherwise, the game ends with a loss.
+
+Usage
+- Open the game in a modern web browser.
+- Click the "Start" button to begin.
+- Interact with various room zones and try to find the ball.
+- Click the ball when found to either win (if few Oopsies) or lose (if too many Oopsies).
+
+License
+This project is open source. Feel free to modify and distribute it as needed.
+
+AI Help - 
+Chatgpt 3o mini-high was used throughout the creation of this project for organization and speed purposes.
+
+      </pre>
+    </div>
+  </main>
+  
+  <!-- Load custom JS (assumes createStarfield is defined in script.js) -->
+  <script src="../scripts/script.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      createStarfield(150);
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dog Game</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.11.1/p5.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.11.1/addons/p5.sound.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="style.css">
+  <style>
+    /* Reset and body styling */
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: #000;  /* Black background */
+      font-family: sans-serif;
+      /* Removed overflow: hidden so page can scroll */
+      min-height: 100%;
+    }
+    /* Starfield background */
+    #starfield {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      pointer-events: none; /* So that scrolling/clicks pass through */
+    }
+    .star {
+      position: absolute;
+      background: white;
+      border-radius: 50%;
+      opacity: 0.8;
+      animation: twinkle 2s infinite ease-in-out alternate;
+    }
+    @keyframes twinkle {
+      from { opacity: 0.2; }
+      to { opacity: 1; }
+    }
+    /* Fixed header with navigation */
+    header {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      background: rgba(0,0,0,0.8);
+      padding: 10px;
+      text-align: center;
+      z-index: 20;
+    }
+    header h1 {
+      margin: 0;
+      font-size: 2em;
+      color: #ffcc00;
+      font-family: "Univers Light Ultra", "Univers", sans-serif;
+    }
+    header a {
+      color: #66ccff;
+      text-decoration: none;
+    }
+    /* Navigation styling */
+    nav {
+      margin-top: 10px;
+      background: rgba(0,0,0,0.9);
+      width: 100%;
+    }
+    nav ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      justify-content: center;
+    }
+    nav ul li {
+      margin: 0 1rem;
+    }
+    nav ul li a {
+      color: #fff;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    nav ul li a:hover,
+    nav ul li a:focus {
+      text-decoration: underline;
+    }
+    /* Container for the p5.js canvas */
+    #sketchContainer {
+      margin-top: 120px; /* space for the fixed header */
+      text-align: center; /* center inline elements (like the canvas) */
+      position: relative;
+      z-index: 10;
+    }
+    /* Extra content to enable scrolling */
+    .spacer {
+      height: 1000px;
+    }
+  </style>
+</head>
+<body>
+  <!-- Starfield Background -->
+  <div id="starfield"></div>
+  
+  <!-- Fixed Header with Navigation -->
+  <header>
+    <h1>Dog Game</h1>
+    <nav id="mainNav">
+      <ul>
+        <li><a href="../index.html">Home</a></li>
+        <li><a href="../project1/index_text_gen.html">Text Generator</a></li>
+        <li><a href="../project2/index_p5_game.html">Find The Ball</a></li>
+        <li><a href="../project3/index_CoinDrop.html">Coin Drop</a></li>
+      </ul>
+    </nav>
+  </header>
+  
+  <!-- Container for the p5.js Canvas -->
+  <div id="sketchContainer"></div>
+  
+  <!-- Optional spacer element to simulate extra page content and enable scrolling -->
+  <div class="spacer"></div>
+  
+  <script>
+    // When DOM content is loaded, generate the starfield.
+    document.addEventListener('DOMContentLoaded', () => {
+      createStarfield(150); // Adjust the number of stars as needed.
+    });
+
+    // Function to create a starfield background.
+    function createStarfield(numStars) {
+      const starfield = document.getElementById('starfield');
+      // Clear any existing stars.
+      starfield.innerHTML = "";
+      for (let i = 0; i < numStars; i++) {
+        let star = document.createElement('div');
+        star.className = 'star';
+        // Position stars randomly using viewport units.
+        star.style.left = Math.random() * 100 + 'vw';
+        star.style.top = Math.random() * 100 + 'vh';
+        // Random size between 1px and 3px.
+        let size = Math.random() * 2 + 1;
+        star.style.width = size + 'px';
+        star.style.height = size + 'px';
+        // Random animation delay.
+        star.style.animationDelay = Math.random() * 5 + 's';
+        starfield.appendChild(star);
+      }
+    }
+  </script>
+  <script src="sketch.js"></script>
+</body>
+</html>

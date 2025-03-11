@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Coin Drop Documentation</title>
+  <link rel="stylesheet" href="../styles/style.css">
+  <!-- Load p5.js if needed for other purposes -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.min.js"></script>
+  <style>
+    /* Navigation styling */
+    nav#mainNav ul li a {
+      font-size: 1.5em;
+      padding: 0.5em 1em;
+      font-family: 'Poppins', sans-serif;
+      color: #ffcc00;
+    }
+    header nav {
+      padding: 1rem 0;
+    }
+    /* Styling for the README display */
+    .readme-content {
+      background: rgba(0, 0, 0, 0.9);
+      color: #ffcc00;
+      padding: 1rem;
+      border-radius: 8px;
+      max-width: 800px;
+      margin: 2rem auto;
+      white-space: pre-wrap;
+      font-family: 'Poppins', sans-serif;
+      line-height: 1.6;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.5);
+      font-size: 1.1em;
+    }
+    /* Override default pre styling */
+    pre {
+      margin: 0;
+      font-family: inherit;
+      font-size: inherit;
+      color: inherit;
+      background: transparent;
+      border: none;
+    }
+  </style>
+</head>
+<body>
+  <!-- Starfield Background -->
+  <div id="starfield"></div>
+  
+  <!-- Navigation Bar -->
+  <header>
+    <nav id="mainNav">
+      <ul>
+        <li><a href="../project1/index_text_gen.html" class="trackable">Text Generator</a></li>
+        <li><a href="../project2/index_p5_game.html" class="trackable">Find The Ball</a></li>
+        <li><a href="../project3/index_CoinDrop.html" class="trackable">Coin Drop</a></li>
+      </ul>
+    </nav>
+  </header>
+  
+  <!-- Main Content: README Information -->
+  <main>
+    <div class="readme-content">
+      <pre>
+Coin Drop - Hand Tracking Game
+--------------------------------
+Coin Drop is an interactive web-based game that leverages hand tracking with ml5.js to deliver an engaging, immersive experience.
+In this game, players control a virtual bucket using their index finger (detected via webcam) to catch falling coins while avoiding bombs.
+
+Features:
+-----------
+• Hand Pose Detection:
+  - Utilizes ml5.js's handPose model to track the player's index finger.
+  - The detected finger controls a virtual bucket represented by an image.
+
+• Falling Objects:
+  - Coins and bombs drop from the top of the screen at varying speeds.
+  - Catching coins increases your score; colliding with a bomb results in an immediate game over.
+
+• Game States:
+  - Multiple states include: "start" (welcome screen), "countdown", "running" (active gameplay), and "gameOver".
+  - A countdown precedes the start of the game, and a restart option is available on the game over screen.
+
+• Interactive Buttons:
+  - On-screen buttons ("Play" and "Restart") are triggered via both mouse clicks and finger-based interaction.
+  - A toggle button allows players to enable/disable bounding boxes for visual feedback.
+
+• High Score Tracking:
+  - The game keeps track of your high score across sessions.
+
+• Responsive Design:
+  - Built with p5.js, the canvas adjusts to your browser window.
+  - Virtual coordinates ensure consistent gameplay across different screen sizes.
+
+How It Works:
+---------------
+1. On the start screen, players use hand tracking to interact with the "Play" button and toggle bounding boxes.
+2. A brief countdown signals the start of the game.
+3. During gameplay, coins and bombs fall from the top. Use your hand (via webcam) to catch coins with the bucket.
+4. Your score increases with every coin caught. Colliding with a bomb ends the game with a "Boom!" message.
+5. After 30 seconds or upon a bomb collision, the game transitions to the game over screen, displaying your final score and high score.
+
+File Structure:
+---------------
+index.html:
+  - Contains the main HTML markup, styles, and p5.js integration.
+sketch.js:
+  - Implements game logic, including hand tracking, object movement, collision detection, and state management.
+Assets:
+  - bucket.png, coin.png, bomb.png – Images for the bucket, coins, and bombs.
+
+Usage:
+---------------
+• Ensure your webcam is enabled and grant browser access.
+• Open the game in a modern web browser.
+• Follow the on-screen instructions to play and try to beat your high score.
+
+AI Help:
+---------------
+
+Chatgpt 3o mini-high was used throughout the creation of this project for organization and speed purposes.
+
+License:
+---------------
+This project is open source. Feel free to modify, share, and distribute it as needed.
+      </pre>
+    </div>
+  </main>
+  
+  <!-- Load custom JS (assumes createStarfield is defined in script.js) -->
+  <script src="../scripts/script.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      createStarfield(150);
+    });
+  </script>
+</body>
+</html>
