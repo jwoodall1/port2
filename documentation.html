@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Documentation</title>
+  <link rel="stylesheet" href="styles/style.css">
+  <!-- Load p5.js if needed for other purposes -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.min.js"></script>
+  <style>
+    /* Increase nav font size and spacing */
+    nav#mainNav ul li a {
+      font-size: 1.5em;
+      padding: 0.5em 1em;
+      font-family: 'Poppins', sans-serif;
+      color: #ffcc00;
+    }
+    header nav {
+      padding: 1rem 0;
+    }
+    /* Styling for the documentation content area */
+    .doc-content {
+      background: rgba(0, 0, 0, 0.9);
+      color: #ffcc00;
+      padding: 1rem;
+      border-radius: 8px;
+      max-width: 800px;
+      margin: 2rem auto;
+      font-family: 'Poppins', sans-serif;
+      line-height: 1.6;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.5);
+      font-size: 1.1em;
+      min-height: 400px; /* Provides ample space for your documentation */
+    }
+  </style>
+</head>
+<body>
+  <!-- Starfield Background -->
+  <div id="starfield"></div>
+  
+  <!-- Navigation Bar -->
+  <header>
+    <nav id="mainNav">
+      <ul>
+        <li><a href="index.html" class="trackable">Home</a></li>
+        <li><a href="project1/index_text_gen.html" class="trackable">Text Generator</a></li>
+        <li><a href="project2/index_p5_game.html" class="trackable">Find The Ball</a></li>
+        <li><a href="project3/index_CoinDrop.html" class="trackable">Coin Drop</a></li>
+        <li><a href="documentation.html" class="trackable">Documentation</a></li>
+      </ul>
+    </nav>
+  </header>
+  
+  <!-- Main Content: Documentation Area -->
+  <main>
+    <div class="doc-content">
+      <h2>Documentation</h2>
+      <p><ul>
+        <li>Overall Documentation</li>
+        <li>AI Methods Used Throughout the Creation of Projects and Portfolio.</li>
+        <li>Chatgpt 4o - used for most of Project 2 - p5.js Game.</li>
+        <li>Chatgpt o3 mini-high - used for other two projects and homepage functionality.</li>
+        <li>Used to maintain style throughout all HTML files, and properly link together pages.</li>
+      </ul>
+      
+      </p>
+    </div>
+  </main>
+  
+  <!-- Load custom JS (assumes createStarfield is defined in script.js) -->
+  <script src="scripts/script.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      createStarfield(150);
+    });
+  </script>
+</body>
+</html>

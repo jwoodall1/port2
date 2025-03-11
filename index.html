@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>My Portfolio</title>
+  <link rel="stylesheet" href="styles/style.css">
+  <!-- Load p5.js if needed for other purposes -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.min.js"></script>
+  <style>
+    /* Increase nav font size and spacing */
+    nav#mainNav ul li a {
+      font-size: 1.5em;
+      padding: 0.5em 1em;
+    }
+    header nav {
+      padding: 1rem 0;
+    }
+    
+    /* Additional styles for video previews in project sections */
+    .project-container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .project-details {
+      flex: 1;
+    }
+    .project-video {
+      flex: 0 0 auto;
+      width: 300px; /* Increased width from 200px to 300px */
+      margin-left: 1rem;
+      cursor: pointer;
+    }
+    .project-video video {
+      width: 100%;
+      border: 2px solid #ffcc00;
+      border-radius: 8px;
+      transition: transform 0.3s ease;
+    }
+    .project-video video:hover {
+      transform: scale(1.05);
+    }
+  </style>
+</head>
+<body>
+  <!-- Starfield Background -->
+  <div id="starfield"></div>
+
+  <!-- Fixed Header with Navigation -->
+  <header>
+    <h1>DGAH 220 Final Portfolio</h1>
+    <h2>By Jonathan Woodall</h2>
+    <button id="navToggle" aria-label="Toggle navigation">☰</button>
+    <nav id="mainNav">
+      <ul>
+        <li><a href="project1/index_text_gen.html" class="trackable">Text Generator</a></li>
+        <li><a href="project2/index_p5_game.html" class="trackable">Find The Ball</a></li>
+        <li><a href="project3/index_CoinDrop.html" class="trackable">Coin Drop</a></li>
+        <li><a href="documentation.html" class = "trackable"> Overall Documentation</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- Main Content -->
+  <main>
+    <section id="project1">
+      <div class="project-container">
+        <div class="project-details">
+          <h2>Text Generator</h2>
+          <p>A web-based project that dynamically generates scrolling sci‑fi stories using a Star Wars–style crawl effect. It randomly combines preset narrative templates with words from a JSON file and features an animated starfield background.</p>
+          <a href="project1/readMe.html" class="trackable">Documentation</a>
+        </div>
+        <div class="project-video">
+          <video class="preview-video" muted loop preload="none" poster="images/project1_preview.jpg">
+            <source src="videos/Text_gen_preview.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+          </video>
+        </div>
+      </div>
+    </section>
+
+    <section id="project2">
+      <div class="project-container">
+        <div class="project-details">
+          <h2>Find The Ball</h2>
+          <p>An interactive p5.js game where you help a playful dog locate its tennis ball in a room full of interactive zones. Click carefully to avoid too many "Oopsies" and win the game.</p>
+          <a href="project2/p2doc.html" class="trackable">Documentation</a>
+        </div>
+        <div class="project-video">
+          <video class="preview-video" muted loop preload="none" poster="images/project2_preview.jpg">
+            <source src="videos/FTB_preview.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+          </video>
+        </div>
+      </div>
+    </section>
+
+    <section id="project3">
+      <div class="project-container">
+        <div class="project-details">
+          <h2>Coin Drop</h2>
+          <p>A hand-gesture controlled game that uses ml5.js and p5.js. With your webcam, control a bucket to catch falling coins while dodging bombs. Finger-triggered buttons start the game and toggle features, challenging you to beat your high score.</p>
+          <a href="project3/p3doc.html" class="trackable">Documentation</a>
+        </div>
+        <div class="project-video">
+          <video class="preview-video" muted loop preload="none" poster="images/project3_preview.jpg">
+            <source src="videos/CoinDrop_preview_small.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+          </video>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+   
+  </footer>
+
+  <!-- Load your custom JS AFTER the libraries -->
+  <script src="scripts/script.js"></script>
+  <script>
+    // Hover-to-play functionality for video previews
+    document.addEventListener('DOMContentLoaded', function () {
+      const previewVideos = document.querySelectorAll('.preview-video');
+      previewVideos.forEach(video => {
+        video.addEventListener('mouseenter', () => {
+          video.play();
+        });
+        video.addEventListener('mouseleave', () => {
+          video.pause();
+          video.currentTime = 0;
+        });
+      });
+    });
+  </script>
+</body>
+</html>
