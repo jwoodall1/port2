@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Sci‑Fy Text Generator</title>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      background: black;
+      cursor: pointer;
+      color: #fefefe;
+      font-family: "News Gothic Bold", "News Gothic", sans-serif;
+    }
+    /* Header styling with persistent nav bar */
+    header {
+      position: absolute;
+      top: 0;
+      width: 100%;
+      background: rgba(0, 0, 0, 0.8);
+      padding: 10px;
+      text-align: center;
+      z-index: 20;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    header h1 {
+      margin: 0;
+      font-size: 2em;
+      color: #ffcc00;
+      font-family: "Univers Light Ultra", "Univers", sans-serif;
+    }
+    header p {
+      margin: 5px 0;
+      font-size: 0.9em;
+      color: #ccc;
+      font-family: "Univers Light Ultra", "Univers", sans-serif;
+    }
+    header a {
+      color: #66ccff;
+      text-decoration: none;
+    }
+    /* Navigation styling */
+    nav {
+      margin-top: 10px;
+      background: rgba(0, 0, 0, 0.9);
+      width: 100%;
+    }
+    nav ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      justify-content: center;
+    }
+    nav ul li {
+      margin: 0 1rem;
+    }
+    nav ul li a {
+      color: #fff;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    nav ul li a:hover,
+    nav ul li a:focus {
+      text-decoration: underline;
+    }
+    /* Starfield background */
+    #starfield {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+    }
+    .star {
+      position: absolute;
+      background: white;
+      border-radius: 50%;
+      opacity: 0.8;
+      animation: twinkle 2s infinite ease-in-out alternate;
+    }
+    @keyframes twinkle {
+      from { opacity: 0.2; }
+      to { opacity: 1; }
+    }
+    /* Container for the crawl text */
+    #crawl {
+      position: absolute;
+      bottom: 150px; /* Leave space for the word canvas */
+      width: 100%;
+      perspective: 400px;
+      z-index: 15;
+    }
+    /* Inner content that will scroll upward */
+    #crawlContent {
+      width: 80%;
+      margin: 0 auto;
+      text-align: center;
+      font-family: "News Gothic Bold", "News Gothic", sans-serif;
+      font-size: 2em;
+      line-height: 1.5;
+      color: yellow;
+      transform: rotateX(25deg);
+      transform-origin: 50% 100%;
+      animation: none;
+    }
+    /* Canvas to display the star-formed word at the bottom */
+    #wordCanvas {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 150px;
+      z-index: 10;
+      background: transparent;
+    }
+    /* Star Wars–style crawl animation */
+    @keyframes crawlAnimation {
+      0% {
+        transform: rotateX(25deg) translateY(100%);
+      }
+      100% {
+        transform: rotateX(25deg) translateY(-200%);
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Starfield Background -->
+  <div id="starfield"></div>
+  
+  <!-- Header Section with Navigation -->
+  <header>
+    <h1>Sci‑Fy Text Generator</h1>
+    <p>
+      Original Texts from: <a href="https://www.gutenberg.org/ebooks/bookshelf/480" target="_blank">Project Gutenberg Bookshelf</a>
+    </p>
+    <p>
+      Author: Jonathan Woodall | Chatgpt o3 mini-high
+    </p>
+    <!-- Navigation Bar -->
+    <nav id="mainNav">
+      <ul>
+        <li><a href="../index.html">Home</a></li>
+        <li><a href="../project1/index_text_gen.html">Text Generator</a></li>
+        <li><a href="../project2/index_p5_game.html">Find The Ball</a></li>
+        <li><a href="../project3/index_CoinDrop.html">Coin Drop</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- Crawl Section -->
+  <div id="crawl">
+    <div id="crawlContent"></div>
+  </div>
+  
+  <!-- Canvas for word formed by stars -->
+  <canvas id="wordCanvas"></canvas>
+
+  <script>
+    // Global variable to store the first placeholder replacement.
+    let firstInsertedWord = null;
+
+    // Wait until DOM content is loaded to create the initial starfield.
+    document.addEventListener('DOMContentLoaded', () => {
+      createStarfield(150); // Create an initial starfield with 150 stars.
+    });
+
+    // Create a starfield by generating many star elements within the #starfield div.
+    function createStarfield(numStars) {
+      const starfield = document.getElementById('starfield');
+      // Clear any existing stars.
+      starfield.innerHTML = "";
+      for (let i = 0; i < numStars; i++) {
+        let star = document.createElement('div');
+        star.className = 'star';
+        // Position stars randomly using viewport units.
+        star.style.left = Math.random() * 100 + 'vw';
+        star.style.top = Math.random() * 100 + 'vh';
+        // Random size between 1px and 3px.
+        let size = Math.random() * 2 + 1;
+        star.style.width = size + 'px';
+        star.style.height = size + 'px';
+        // Random animation delay.
+        star.style.animationDelay = Math.random() * 5 + 's';
+        starfield.appendChild(star);
+      }
+    }
+
+    // Global variable to hold word categories loaded from JSON.
+    let wordsDict = null;
+
+    // Load categorized words from external JSON.
+    fetch('edited_categorized_words.json')
+      .then(response => response.json())
+      .then(data => {
+        wordsDict = data;
+        displayStory();
+      })
+      .catch(error => console.error('Error loading JSON:', error));
+
+    // Sci‑fi themed paragraph templates grouped by style.
+    const storyTemplates = {
+      narrative: [
+        "In the #adjectives# reaches of the cosmos, a lone #nouns# #verbs# silently. #proper_nouns.capitalize# watched from afar, pondering the mysteries of the #adjectives# void.",
+        "Drifting through a sea of #adjectives# stars, the #nouns# #verbs# as if searching for an elusive truth. Meanwhile, #proper_nouns# #verbs# with quiet resolve."
+      ],
+      descriptive: [
+        "The galaxy shimmered in #adjectives# hues as #nouns# and #nouns# mingled in the #adjectives# light. Every corner of space revealed a new facet of the #nouns#.",
+        "Amid the #adjectives# nebulae, a field of #nouns# stretched endlessly, each emitting a glow of #adjectives# brilliance."
+      ],
+      dialogue: [
+        "\"#proper_nouns.capitalize#, do you see how the #nouns# #verbs# beyond the horizon?\" whispered a voice in the void.",
+        "\"The #nouns# have #verbs# once again,\" declared #proper_nouns#, \"and our destiny is now entwined with the #adjectives# currents of space.\""
+      ],
+      action: [
+        "Without warning, the #nouns# #verbs# into motion, igniting a chain reaction among the #adjectives# satellites.",
+        "In a burst of energy, the #nouns# #verbs#, scattering debris across the #adjectives# expanse."
+      ],
+      mysterious: [
+        "A shadow moved where the light of the #adjectives# stars could not reach—as if a secret #nouns# was #verbs# in the dark.",
+        "Deep in the #adjectives# void, an unknown #nouns# #verbs# with eerie precision, leaving #proper_nouns# perplexed."
+      ],
+      philosophical: [
+        "What is a #nouns# but a fragment of the infinite? In the #adjectives# tapestry of space, even a #nouns# holds a universe of meaning.",
+        "#proper_nouns.capitalize# mused, \"Every #nouns# is a story, bound by the #adjectives# laws of existence.\""
+      ],
+      epic: [
+        "Across the #adjectives# expanse, a mighty #nouns# #verbs# towards destiny, heralding an age of #adjectives# wonders.",
+        "In a clash of #nouns# and #nouns#, the cosmos trembled as #proper_nouns# led the charge with an #adjectives# spirit."
+      ],
+      cosmic: [
+        "The universe unfolded like a #adjectives# scroll, where every #nouns# and #nouns# played its part in the #adjectives# drama of existence.",
+        "Amid swirling clouds of #adjectives# stardust, the #nouns# #verbs#—a silent ode to the mystery of creation."
+      ],
+      melancholy: [
+        "In the cold vacuum, a solitary #nouns# #verbs# while memories of a #adjectives# past echoed in the void.",
+        "A #adjectives# sorrow pervaded space, as the #nouns# #verbs# with a heavy heart, leaving #proper_nouns# to ponder lost dreams."
+      ]
+    };
+
+    // Utility function: pick a random element from an array.
+    function randomChoice(arr) {
+      return arr[Math.floor(Math.random() * arr.length)];
+    }
+
+    // Replace placeholders (e.g., #nouns# or #proper_nouns.capitalize#) with random words.
+    // The first replacement encountered is stored in the global variable firstInsertedWord.
+    function replacePlaceholders(template, words) {
+      return template.replace(/#([a-zA-Z_]+)(?:\.([a-zA-Z_]+))?#/g, (match, category, transformation) => {
+        if (words[category] && words[category].length > 0) {
+          let word = randomChoice(words[category]);
+          if (transformation) {
+            if (transformation === "capitalize") {
+              word = word.charAt(0).toUpperCase() + word.slice(1);
+            } else if (transformation === "upper") {
+              word = word.toUpperCase();
+            } else if (transformation === "lower") {
+              word = word.toLowerCase();
+            }
+          }
+          // Capture the first replaced word if not already set.
+          if (!firstInsertedWord) {
+            firstInsertedWord = word;
+          }
+          return word;
+        }
+        return match;
+      });
+    }
+
+    // Generate a story from random templates.
+    function generateStory(words, templates, numParagraphs = 8) {
+      // Reset firstInsertedWord for each new story.
+      firstInsertedWord = null;
+      const paragraphs = [];
+      const availableStyles = Object.keys(templates);
+      for (let i = 0; i < numParagraphs; i++) {
+        const style = randomChoice(availableStyles);
+        const template = randomChoice(templates[style]);
+        const paragraph = replacePlaceholders(template, words);
+        paragraphs.push(paragraph);
+      }
+      return paragraphs.join("\n\n");
+    }
+
+    // Display the generated story and update the word canvas using the captured first placeholder word.
+    function displayStory() {
+      if (!wordsDict) return;
+      const story = generateStory(wordsDict, storyTemplates, 8);
+      const crawlContent = document.getElementById("crawlContent");
+      crawlContent.innerText = story;
+      crawlContent.style.animation = "none";
+      void crawlContent.offsetWidth;
+      crawlContent.style.animation = "crawlAnimation 40s linear forwards";
+      
+      // Use the captured first inserted word from the placeholders.
+      let wordToDraw = firstInsertedWord || "";
+      drawWordWithStars(wordToDraw);
+    }
+
+    // Draw the given word on the canvas as a star pattern with a slower, non-zero twinkling effect.
+    function drawWordWithStars(word) {
+      let canvas = document.getElementById("wordCanvas");
+      let ctx = canvas.getContext("2d");
+      canvas.width = window.innerWidth;
+      canvas.height = 150;
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      // Prepare an offscreen canvas to render the word.
+      let fontSize = 120;
+      let offscreen = document.createElement("canvas");
+      offscreen.width = canvas.width;
+      offscreen.height = canvas.height;
+      let offCtx = offscreen.getContext("2d");
+      offCtx.font = `bold ${fontSize}px "Univers Light Ultra", "Univers", sans-serif`;
+      offCtx.fillStyle = "black";
+      offCtx.fillRect(0, 0, offscreen.width, offscreen.height);
+      offCtx.fillStyle = "white";
+      let textMetrics = offCtx.measureText(word);
+      let textWidth = textMetrics.width;
+      let startX = (canvas.width - textWidth) / 2;
+      let startY = canvas.height / 2 + fontSize / 3;
+      offCtx.fillText(word, startX, startY);
+
+      // Get pixel data from the offscreen canvas.
+      let imageData = offCtx.getImageData(0, 0, offscreen.width, offscreen.height);
+      let data = imageData.data;
+      let sample = 6;
+      let stars = []; // Array to store star objects.
+      for (let y = 0; y < offscreen.height; y += sample) {
+        for (let x = 0; x < offscreen.width; x += sample) {
+          let index = (y * offscreen.width + x) * 4;
+          if (data[index] > 200 && data[index + 1] > 200 && data[index + 2] > 200) {
+            let starSize = Math.random() * 2 + 1;
+            // Each star gets a random phase for the twinkle effect.
+            stars.push({ x, y, starSize, phase: Math.random() * 2 * Math.PI });
+          }
+        }
+      }
+
+      // Animate the star pattern with a slower twinkle that never reaches zero.
+      let startTime = null;
+      function animate(timestamp) {
+        if (!startTime) startTime = timestamp;
+        let elapsed = (timestamp - startTime) / 1000; // in seconds
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        for (let star of stars) {
+          // Calculate an alpha value that oscillates between 0.2 and 1.0.
+          let alpha = 0.2 + 0.8 * ((Math.sin(elapsed * 1 + star.phase) + 1) / 2);
+          ctx.fillStyle = `rgba(255, 255, 255, ${alpha.toFixed(2)})`;
+          ctx.beginPath();
+          ctx.arc(star.x, star.y, star.starSize, 0, Math.PI * 2);
+          ctx.fill();
+        }
+        requestAnimationFrame(animate);
+      }
+      requestAnimationFrame(animate);
+    }
+
+    // Regenerate story on any click.
+    document.body.addEventListener("click", () => {
+      if (wordsDict) displayStory();
+    });
+  </script>
+</body>
+</html>
